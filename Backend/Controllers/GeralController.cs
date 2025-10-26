@@ -19,5 +19,34 @@ using Microsoft.AspNetCore.Mvc;
         var cards = _geralService.CardsGeral();
         return Ok(cards);
         }
-    }
+
+        [HttpGet("exames-semestral")]
+        public IActionResult GetExames(int? ano = null, int? mes = null) 
+        {
+         var total = _geralService.ExameSemestral(ano, mes);
+         return Ok(total);
+        }
+
+        [HttpGet("medicos-exames")]
+        public IActionResult GetMedicosExames()
+        {
+            var geralService = new GeralService();
+            var cards = _geralService.MedicosExames();
+            return Ok(cards);
+        }
+
+        [HttpGet("consultas-semestral")]
+        public IActionResult GetConsultas(int? ano = null, int? mes = null)
+        {
+            var total = _geralService.ConsultasSemestral(ano, mes);
+            return Ok(total);
+        }
+        [HttpGet("medicos-consultas")]
+        public IActionResult GetMedicosConsultas()
+        {
+            var geralService = new GeralService();
+            var cards = _geralService.MedicosConsulta();
+            return Ok(cards);
+        }
+}
 

@@ -188,13 +188,48 @@ namespace Backend.Services
                 lista.Add(new GeralDto
                 {
                     nome = reader["paciente"] == DBNull.Value ? string.Empty : reader["paciente"].ToString().Trim(),
-                    cpf = reader["cpf"] == DBNull.Value ? 0 : Convert.ToInt32(reader["cpf"]),
+                    cpf = reader["cpf"] == DBNull.Value ? string.Empty : reader["cpf"].ToString().Trim(),
                     email = reader["email"] == DBNull.Value ? string.Empty : reader["email"].ToString().Trim(),
-                    telefone = reader["telefone"] == DBNull.Value ? 0 : Convert.ToInt32(reader["telefone"]),
+                    telefone = reader["telefone"] == DBNull.Value ? string.Empty : reader["telefone"].ToString().Trim(),
                     exames = reader["exames"] == DBNull.Value ? 0 : Convert.ToInt32(reader["exames"])
                 });
             }
             return lista;
         }
+
+
+        public List<GeralDto> PacitentesConsultas() 
+        {
+            var lista = new List<GeralDto>();
+            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+
+            comando.CommandText = @"
+             select
+                 p.nome as consulta,
+                 p.cpf as cpf,
+                 p.email as email,
+                 p.telefone telefone,
+                 count(*) as consultas
+            from consultas c
+            inner join pacientes p
+                on p.paciente_id = c.paciente_id
+            group by p.nome, p.cpf, p.telefone, p.email
+            order by consultas desc
+            limit 15
+            ";
+            var reader = comando.ExecuteReader();
+            while (reader.Read())
+            {
+                lista.Add(new GeralDto
+                {
+                    nome = reader["consultas"] == DBNull.Value ? string.Empty : reader["consultas"].ToString().Trim(),
+                    cpf = reader["cpf"] == DBNull.Value ? string.Empty : reader["cpf"].ToString().Trim(),
+                    email = reader["email"] == DBNull.Value ? string.Empty : reader["email"].ToString().Trim(),
+                    telefone = reader["telefone"] == DBNull.Value ? string.Empty : reader["telefone"].ToString().Trim(),
+                    exames = reader["consultas"] == DBNull.Value ? 0 : Convert.ToInt32(reader["consultas"])
+                });
+            }
+            return lista;
+        }  
     }
 }

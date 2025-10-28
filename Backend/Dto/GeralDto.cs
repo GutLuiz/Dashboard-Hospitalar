@@ -9,6 +9,9 @@
 
         public string nome { get; set; } = "";
 
+        public int cpf { get; set; } = 0;
+        public string email { get; set; } = "";
+        public int telefone { get; set; }
 
     }
 }

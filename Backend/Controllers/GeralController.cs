@@ -48,5 +48,13 @@ using Microsoft.AspNetCore.Mvc;
             var cards = _geralService.MedicosConsulta();
             return Ok(cards);
         }
+
+        [HttpGet("pacientes-exames")]
+        public IActionResult GetPacientesExames()
+        {
+            var geralService = new GeralService();
+            var cards = _geralService.PacientesExames();
+            return Ok(cards);
+        }
 }
 

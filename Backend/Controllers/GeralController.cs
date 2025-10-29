@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
         [HttpGet("cards-geral")]
         public IActionResult GetCards() 
         {
-        var geralService = new GeralService();
         var cards = _geralService.CardsGeral();
         return Ok(cards);
         }
@@ -30,7 +29,6 @@ using Microsoft.AspNetCore.Mvc;
         [HttpGet("medicos-exames")]
         public IActionResult GetMedicosExames()
         {
-            var geralService = new GeralService();
             var cards = _geralService.MedicosExames();
             return Ok(cards);
         }
@@ -44,7 +42,6 @@ using Microsoft.AspNetCore.Mvc;
         [HttpGet("medicos-consultas")]
         public IActionResult GetMedicosConsultas()
         {
-            var geralService = new GeralService();
             var cards = _geralService.MedicosConsulta();
             return Ok(cards);
         }
@@ -52,14 +49,12 @@ using Microsoft.AspNetCore.Mvc;
         [HttpGet("pacientes-exames")]
         public IActionResult GetPacientesExames()
         {
-            var geralService = new GeralService();
             var cards = _geralService.PacientesExames();
             return Ok(cards);
         }
         [HttpGet("pacientes-consultas")]
         public IActionResult GetPacientesConsultas()
         {
-            var geralService = new GeralService();
             var cards = _geralService.PacitentesConsultas();
             return Ok(cards);
         }

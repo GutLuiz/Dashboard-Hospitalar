@@ -64,4 +64,5 @@ public class PacienteExameDto
 
         public int consulta { get; set; } = 0;
     }
+
 }

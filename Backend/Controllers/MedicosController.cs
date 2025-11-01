@@ -19,5 +19,11 @@ public class MedicosController : ControllerBase
         var total = _medicosService.MedicosConsultas();
         return Ok(total);
     }
+    [HttpGet("medicos-exames")]
+    public ActionResult GetMedicosExames()
+    {
+        var total = _medicosService.MedicoExames();
+        return Ok(total);
     }
+}
 

@@ -5,9 +5,9 @@ namespace Backend.Services
 {
     public class MedicosService
     {
-        public List<GeralDto> MedicosConsultas()
+        public List<MedicosConsultasDto> MedicosConsultas()
         {
-            var lista = new List<GeralDto>();
+            var lista = new List<MedicosConsultasDto>();
             var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             comando.CommandText = @"
@@ -26,12 +26,47 @@ namespace Backend.Services
 
             while (reader.Read())
             {
-                lista.Add(new GeralDto
+                lista.Add(new MedicosConsultasDto
                 {
-                    nome = reader["medico"] == DBNull.Value ? string.Empty : reader["medico"].ToString().Trim(),
+                    medicos = reader["medico"] == DBNull.Value ? string.Empty : reader["medico"].ToString().Trim(),
                     email = reader["email"] == DBNull.Value ? string.Empty : reader["email"].ToString().Trim(),
                     crm = reader["crm"] == DBNull.Value ? string.Empty : reader["crm"].ToString().Trim(),
                     consultas = reader["consultas"] == DBNull.Value ? 0 : Convert.ToInt32(reader["consultas"])
+                });
+            };
+            return lista;
+        }
+    
+
+
+    public List<MedicoExameDto> MedicoExames()
+        {
+            var lista = new List<MedicoExameDto>();
+            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+
+            comando.CommandText = @"
+            SELECT 
+                m.nome as medico,
+                m.email as email,
+                m.crm as crm,
+                count(*) as exames
+            FROM EXAMES e
+            inner join MEDICOS m
+	            on e.medico_id  = m.medico_id
+            group by m.nome,m.email,m.crm
+            order by exames desc
+            ";
+            using var reader = comando.ExecuteReader();
+
+            while (reader.Read())
+            {
+                lista.Add(new MedicoExameDto
+                {
+                    medicos = reader["medico"] == DBNull.Value ? string.Empty : reader["medico"].ToString().Trim(),
+                    email = reader["email"] == DBNull.Value ? string.Empty : reader["email"].ToString().Trim(),
+                    crm = reader["crm"] == DBNull.Value ? string.Empty : reader["crm"].ToString().Trim(),
+                    exames = reader["exames"] == DBNull.Value ? 0 : Convert.ToInt32(reader["exames"])
+
                 });
             };
             return lista;

@@ -8,6 +8,7 @@ ConexaoServico.Configurar(configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<GeralService>();
+builder.Services.AddScoped<MedicosService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

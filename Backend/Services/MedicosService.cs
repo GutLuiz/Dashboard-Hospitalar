@@ -12,9 +12,9 @@ namespace Backend.Services
 
             comando.CommandText = @"
             SELECT 
-                m.nome,
-                m.email,
-                m.crm,
+                m.nome as medico,
+                m.email as email,
+                m.crm as crm,
                 count(*) as consultas
             FROM CONSULTAS c
             inner join MEDICOS m
@@ -28,7 +28,7 @@ namespace Backend.Services
             {
                 lista.Add(new GeralDto
                 {
-                    nome = reader["paciente"] == DBNull.Value ? string.Empty : reader["paciente"].ToString().Trim(),
+                    nome = reader["medico"] == DBNull.Value ? string.Empty : reader["medico"].ToString().Trim(),
                     email = reader["email"] == DBNull.Value ? string.Empty : reader["email"].ToString().Trim(),
                     crm = reader["crm"] == DBNull.Value ? string.Empty : reader["crm"].ToString().Trim(),
                     consultas = reader["consultas"] == DBNull.Value ? 0 : Convert.ToInt32(reader["consultas"])

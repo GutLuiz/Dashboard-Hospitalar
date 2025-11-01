@@ -5,9 +5,9 @@ namespace Backend.Services
 {
     public class GeralService
     {
-        public List<GeralDto> CardsGeral()
+        public List<CardsDto> CardsGeral()
         {
-            var lista = new List<GeralDto>();
+            var lista = new List<CardsDto>();
 
             using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
             comando.CommandText = @"
@@ -21,7 +21,7 @@ namespace Backend.Services
             using var reader = comando.ExecuteReader();
             while (reader.Read())
             {
-                lista.Add(new GeralDto
+                lista.Add(new CardsDto
                 {
                     pacientes = reader["pacientes"] == DBNull.Value ? 0 : Convert.ToInt32(reader["pacientes"]),
                     medicos = reader["medicos"] == DBNull.Value ? 0 : Convert.ToInt32(reader["medicos"]),
@@ -32,9 +32,9 @@ namespace Backend.Services
             return lista;
         }
 
-        public List<GeralDto> ExameSemestral(int? ano, int? mes)
+        public List<ExamesDto> ExameSemestral(int? ano, int? mes)
         {
-            var lista = new List<GeralDto>();
+            var lista = new List<ExamesDto>();
             using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             var hoje = DateTime.Now;
@@ -58,9 +58,9 @@ namespace Backend.Services
                 using var reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
-                    lista.Add(new GeralDto
+                    lista.Add(new ExamesDto
                     {
-                        nome = dataInicio.ToString("MMMM"),
+                        mes = dataInicio.ToString("MMMM"),
                         exames = reader["exames"] == DBNull.Value ? 0 : Convert.ToInt32(reader["exames"])
                     });
                 }
@@ -68,9 +68,9 @@ namespace Backend.Services
             return lista;
         }
 
-        public List<GeralDto> MedicosExames()
+        public List<ExamesMedicosDto> MedicosExames()
         {
-            var lista = new List<GeralDto>();
+            var lista = new List<ExamesMedicosDto>();
             using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             comando.CommandText = @"
@@ -87,9 +87,9 @@ namespace Backend.Services
             using var reader = comando.ExecuteReader();
             while (reader.Read())
             {
-                lista.Add(new GeralDto
+                lista.Add(new ExamesMedicosDto
                 {
-                    nome = reader["medico"] == DBNull.Value ? string.Empty : reader["medico"].ToString().Trim(),
+                    medicos = reader["medico"] == DBNull.Value ? string.Empty : reader["medico"].ToString().Trim(),
                     exames = reader["exames"] == DBNull.Value ? 0 : Convert.ToInt32(reader["exames"])
                 }
                 );
@@ -97,9 +97,9 @@ namespace Backend.Services
             return lista;
         }
 
-        public List<GeralDto> ConsultasSemestral(int? ano, int? mes)
+        public List<ConsutasDto> ConsultasSemestral(int? ano, int? mes)
         {
-            var lista = new List<GeralDto>();
+            var lista = new List<ConsutasDto>();
             var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             var hoje = DateTime.Now;
@@ -123,18 +123,18 @@ namespace Backend.Services
                 using var reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
-                    lista.Add(new GeralDto
+                    lista.Add(new ConsutasDto
                     {
-                        nome = dataInicio.ToString("MMMM"),
+                        mes = dataInicio.ToString("MMMM"),
                         consultas = reader["consultas"] == DBNull.Value ? 0 : Convert.ToInt32(reader["consultas"])
                     });
                 }
             }
             return lista;
         }
-        public List<GeralDto> MedicosConsulta()
+        public List<ConsultasMedicosDto> MedicosConsulta()
         {
-            var lista = new List<GeralDto>();
+            var lista = new List<ConsultasMedicosDto>();
             var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             comando.CommandText = @"
@@ -151,9 +151,9 @@ namespace Backend.Services
             using var reader = comando.ExecuteReader();
             while (reader.Read())
             {
-                lista.Add(new GeralDto
+                lista.Add(new ConsultasMedicosDto
                 {
-                    nome = reader["medico"] == DBNull.Value ? string.Empty : reader["medico"].ToString().Trim(),
+                    medicos = reader["medico"] == DBNull.Value ? string.Empty : reader["medico"].ToString().Trim(),
                     consultas = reader["consultas"] == DBNull.Value ? 0 : Convert.ToInt32(reader["consultas"])
                 }
                 );
@@ -161,9 +161,9 @@ namespace Backend.Services
             return lista;
         }
 
-        public List<GeralDto> PacientesExames() 
+        public List<PacienteExameDto> PacientesExames() 
         {
-            var lista = new List<GeralDto>();
+            var lista = new List<PacienteExameDto>();
             var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             comando.CommandText = @"
@@ -185,9 +185,9 @@ namespace Backend.Services
             while (reader.Read())
             {
 
-                lista.Add(new GeralDto
+                lista.Add(new PacienteExameDto
                 {
-                    nome = reader["paciente"] == DBNull.Value ? string.Empty : reader["paciente"].ToString().Trim(),
+                    pacientes = reader["paciente"] == DBNull.Value ? string.Empty : reader["paciente"].ToString().Trim(),
                     cpf = reader["cpf"] == DBNull.Value ? string.Empty : reader["cpf"].ToString().Trim(),
                     email = reader["email"] == DBNull.Value ? string.Empty : reader["email"].ToString().Trim(),
                     telefone = reader["telefone"] == DBNull.Value ? string.Empty : reader["telefone"].ToString().Trim(),
@@ -198,14 +198,14 @@ namespace Backend.Services
         }
 
 
-        public List<GeralDto> PacitentesConsultas() 
+        public List<PacienteConsultaDto> PacitentesConsultas() 
         {
-            var lista = new List<GeralDto>();
+            var lista = new List<PacienteConsultaDto>();
             var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             comando.CommandText = @"
              select
-                 p.nome as consulta,
+                 p.nome as paciente,
                  p.cpf as cpf,
                  p.email as email,
                  p.telefone telefone,
@@ -220,13 +220,13 @@ namespace Backend.Services
             var reader = comando.ExecuteReader();
             while (reader.Read())
             {
-                lista.Add(new GeralDto
+                lista.Add(new PacienteConsultaDto
                 {
-                    nome = reader["consultas"] == DBNull.Value ? string.Empty : reader["consultas"].ToString().Trim(),
+                    pacientes = reader["paciente"] == DBNull.Value ? string.Empty : reader["paciente"].ToString().Trim(),
                     cpf = reader["cpf"] == DBNull.Value ? string.Empty : reader["cpf"].ToString().Trim(),
                     email = reader["email"] == DBNull.Value ? string.Empty : reader["email"].ToString().Trim(),
                     telefone = reader["telefone"] == DBNull.Value ? string.Empty : reader["telefone"].ToString().Trim(),
-                    exames = reader["consultas"] == DBNull.Value ? 0 : Convert.ToInt32(reader["consultas"])
+                    consulta = reader["consultas"] == DBNull.Value ? 0 : Convert.ToInt32(reader["consultas"])
                 });
             }
             return lista;

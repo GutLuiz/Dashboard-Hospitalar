@@ -26,7 +26,7 @@ using Microsoft.AspNetCore.Mvc;
          return Ok(total);
         }
 
-        [HttpGet("medicos-exames")]
+        [HttpGet("medicos-exames-home")]
         public IActionResult GetMedicosExames()
         {
             var cards = _geralService.MedicosExames();
@@ -39,7 +39,7 @@ using Microsoft.AspNetCore.Mvc;
             var total = _geralService.ConsultasSemestral(ano, mes);
             return Ok(total);
         }
-        [HttpGet("medicos-consultas")]
+        [HttpGet("medicos-consultas-home")]
         public IActionResult GetMedicosConsultas()
         {
             var cards = _geralService.MedicosConsulta();

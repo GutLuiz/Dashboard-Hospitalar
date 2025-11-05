@@ -5,7 +5,7 @@ namespace Backend.Services
 {
     public class MedicosService
     {
-        public List<MedicosConsultasDto> MedicosConsultas()
+        public static List<MedicosConsultasDto> MedicosConsultas()
         {
             var lista = new List<MedicosConsultasDto>();
             var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
@@ -37,9 +37,7 @@ namespace Backend.Services
             return lista;
         }
 
-
-
-        public List<MedicoExameDto> MedicoExames()
+        public static  List<MedicoExameDto> MedicoExames()
         {
             var lista = new List<MedicoExameDto>();
             var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
@@ -71,7 +69,66 @@ namespace Backend.Services
             };
             return lista;
         }
-           
 
+
+        public static List<EspecialidadeConsultas> EspecialidadeConsultas() 
+        {
+            var lista = new List<EspecialidadeConsultas>();
+            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+
+            comando.CommandText = @"
+            select 
+                m.especialidade as especialidade,
+                count(*)as consultas
+            from medicos m
+            inner join consultas c
+	            on m.medico_id = c.medico_id
+            group by m.especialidade
+            order by consultas desc
+            limit 5
+            ";
+
+            using var reader = comando.ExecuteReader();
+
+            while (reader.Read()) 
+            {
+                lista.Add(new EspecialidadeConsultas
+                {
+                    especialidade = reader["especialidade"] == DBNull.Value ? string.Empty : reader["especialidade"].ToString().Trim(),
+                    consultas = reader["consultas"] == DBNull.Value ? 0 : Convert.ToInt32(reader["consultas"])
+                });
+            }
+            return lista;
+        }
+
+        public static List<EspecialidadeExames> EspecialidadeExames()
+        {
+            var lista = new List<EspecialidadeExames>();
+            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+
+            comando.CommandText = @"
+            select 
+                 m.especialidade as especialidade,
+                 count(*) as exames 
+             from medicos m
+             inner join exames e
+                on m.medico_id = e.medico_id
+             group by m.especialidade
+             order by exames desc
+             limit 5;
+            ";
+
+            using var reader = comando.ExecuteReader();
+
+            while (reader.Read())
+            {
+                lista.Add(new EspecialidadeExames
+                {
+                    especialidade = reader["especialidade"] == DBNull.Value ? string.Empty : reader["especialidade"].ToString().Trim(),
+                    exames = reader["exames"] == DBNull.Value ? 0 : Convert.ToInt32(reader["exames"])
+                });
+            }
+            return lista;
+        }
     }
 }

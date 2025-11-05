@@ -5,7 +5,7 @@ namespace Backend.Services
 {
     public class GeralService
     {
-        public List<CardsDto> CardsGeral()
+        public static List<CardsDto> CardsGeral()
         {
             var lista = new List<CardsDto>();
 
@@ -32,7 +32,7 @@ namespace Backend.Services
             return lista;
         }
 
-        public List<ExamesDto> ExameSemestral(int? ano, int? mes)
+        public static List<ExamesDto> ExameSemestral(int? ano, int? mes)
         {
             var lista = new List<ExamesDto>();
             using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
@@ -68,7 +68,7 @@ namespace Backend.Services
             return lista;
         }
 
-        public List<ExamesMedicosDto> MedicosExames()
+        public static List<ExamesMedicosDto> MedicosExames()
         {
             var lista = new List<ExamesMedicosDto>();
             using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
@@ -82,7 +82,7 @@ namespace Backend.Services
 	            on m.medico_id = e.medico_id
             group by m.nome
             order by exames desc
-            limit 5
+            limit 5;
             ";
             using var reader = comando.ExecuteReader();
             while (reader.Read())
@@ -97,10 +97,10 @@ namespace Backend.Services
             return lista;
         }
 
-        public List<ConsutasDto> ConsultasSemestral(int? ano, int? mes)
+        public static List<ConsutasDto> ConsultasSemestral(int? ano, int? mes)
         {
             var lista = new List<ConsutasDto>();
-            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             var hoje = DateTime.Now;
             int anoBase = ano ?? hoje.Year;
@@ -115,7 +115,7 @@ namespace Backend.Services
                 SELECT 
                    COUNT(*) as consultas
                 FROM consultas c
-                WHERE c.data_consulta::date BETWEEN @dataInicio and @dataFim;                       
+                WHERE c.data_consulta::date BETWEEN @dataInicio and @dataFim;   
                 ";
                 comando.Parameters.Clear();
                 comando.Parameters.AddWithValue("@dataInicio", dataInicio);
@@ -132,10 +132,10 @@ namespace Backend.Services
             }
             return lista;
         }
-        public List<ConsultasMedicosDto> MedicosConsulta()
+        public static List<ConsultasMedicosDto> MedicosConsulta()
         {
             var lista = new List<ConsultasMedicosDto>();
-            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using  var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             comando.CommandText = @"
             SELECT 
@@ -146,7 +146,7 @@ namespace Backend.Services
 	            on m.medico_id = c.medico_id
             group by m.nome
             order by consultas desc
-            limit 5
+            limit 5;
             ";
             using var reader = comando.ExecuteReader();
             while (reader.Read())
@@ -161,10 +161,10 @@ namespace Backend.Services
             return lista;
         }
 
-        public List<PacienteExameDto> PacientesExames() 
+        public static List<PacienteExameDto> PacientesExames() 
         {
             var lista = new List<PacienteExameDto>();
-            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             comando.CommandText = @"
             select
@@ -178,10 +178,10 @@ namespace Backend.Services
 	            on p.paciente_id = e.paciente_id
             group by p.nome, p.cpf, p.telefone, p.email
             order by exames desc
-            limit 15
+            limit 5;
             ";
 
-            var reader = comando.ExecuteReader();
+            using var reader = comando.ExecuteReader();
             while (reader.Read())
             {
 
@@ -198,10 +198,10 @@ namespace Backend.Services
         }
 
 
-        public List<PacienteConsultaDto> PacitentesConsultas() 
+        public static List<PacienteConsultaDto> PacitentesConsultas() 
         {
             var lista = new List<PacienteConsultaDto>();
-            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
 
             comando.CommandText = @"
              select
@@ -215,9 +215,9 @@ namespace Backend.Services
                 on p.paciente_id = c.paciente_id
             group by p.nome, p.cpf, p.telefone, p.email
             order by consultas desc
-            limit 15
+            limit 5;
             ";
-            var reader = comando.ExecuteReader();
+            using var reader = comando.ExecuteReader();
             while (reader.Read())
             {
                 lista.Add(new PacienteConsultaDto

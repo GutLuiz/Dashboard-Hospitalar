@@ -1,29 +1,34 @@
 ﻿using Backend.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/")]
 public class MedicosController : ControllerBase
 {
-         private readonly MedicosService _medicosService;
-
-        public MedicosController(MedicosService medicosService)
+    [HttpGet("graficos-medicos")]
+    public ActionResult GetGraficos()
+    {
+        var EspecialidadeConsulta = MedicosService.EspecialidadeConsultas();
+        var EspecialidadeExames = MedicosService.EspecialidadeExames();
+        return Ok(new
         {
-        _medicosService = medicosService;
-        }
+            EspecialidadeConsulta,
+            EspecialidadeExames
+        });
+    }
 
-    [HttpGet("medicos-consultas")]
-    public ActionResult GetMedicosConsutlas()
+    [HttpGet("listas-medicos")]
+    public ActionResult GetListas()
     {
-        var total = _medicosService.MedicosConsultas();
-        return Ok(total);
+        var MedicosConsultas = MedicosService.MedicosConsultas();
+        var MedicosExames = MedicosService.MedicoExames();
+        return Ok(new
+        {
+            MedicosConsultas,
+            MedicosExames
+        });
     }
-    [HttpGet("medicos-exames")]
-    public ActionResult GetMedicosExames()
-    {
-        var total = _medicosService.MedicoExames();
-        return Ok(total);
-    }
+
+
 }
 

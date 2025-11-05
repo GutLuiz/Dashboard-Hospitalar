@@ -5,58 +5,40 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/")]
     public class GeralController : ControllerBase
     {
-        private readonly GeralService _geralService;
-        
-        public GeralController(GeralService geral) 
-        {
-            _geralService = geral;
-        }
 
         [HttpGet("cards-geral")]
         public IActionResult GetCards() 
         {
-        var cards = _geralService.CardsGeral();
-        return Ok(cards);
-        }
-
-        [HttpGet("exames-semestral")]
-        public IActionResult GetExames(int? ano = null, int? mes = null) 
-        {
-         var total = _geralService.ExameSemestral(ano, mes);
-         return Ok(total);
-        }
-
-        [HttpGet("medicos-exames-home")]
-        public IActionResult GetMedicosExames()
-        {
-            var cards = _geralService.MedicosExames();
+            var cards = GeralService.CardsGeral();
             return Ok(cards);
         }
 
-        [HttpGet("consultas-semestral")]
-        public IActionResult GetConsultas(int? ano = null, int? mes = null)
+        [HttpGet("graficos-geral")]
+        public IActionResult GetGraficos(int? ano = null, int? mes = null) 
         {
-            var total = _geralService.ConsultasSemestral(ano, mes);
-            return Ok(total);
-        }
-        [HttpGet("medicos-consultas-home")]
-        public IActionResult GetMedicosConsultas()
-        {
-            var cards = _geralService.MedicosConsulta();
-            return Ok(cards);
+            var ExamesSemestral = GeralService.ExameSemestral(ano, mes);
+            var MedicosExames = GeralService.MedicosExames();
+            var ConsultasSemestral = GeralService.ConsultasSemestral(ano, mes);
+            var MedicosConsulta = GeralService.MedicosConsulta();
+            return Ok(new {
+                ExamesSemestral,
+                MedicosExames,
+                ConsultasSemestral,
+                MedicosConsulta,
+            });
         }
 
-        [HttpGet("pacientes-exames")]
-        public IActionResult GetPacientesExames()
+        [HttpGet("listas-geral")]
+        public IActionResult GetListas()
         {
-            var cards = _geralService.PacientesExames();
-            return Ok(cards);
+            var ExamesPacientes = GeralService.PacientesExames();
+            var ConsultasPacientes = GeralService.PacitentesConsultas();
+            return Ok(new
+            {
+                ExamesPacientes,
+                ConsultasPacientes
+            });
         }
-        [HttpGet("pacientes-consultas")]
-        public IActionResult GetPacientesConsultas()
-        {
-            var cards = _geralService.PacitentesConsultas();
-            return Ok(cards);
-        }
+
 }
 

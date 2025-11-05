@@ -36,10 +36,10 @@ namespace Backend.Services
             };
             return lista;
         }
-    
 
 
-    public List<MedicoExameDto> MedicoExames()
+
+        public List<MedicoExameDto> MedicoExames()
         {
             var lista = new List<MedicoExameDto>();
             var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
@@ -71,5 +71,7 @@ namespace Backend.Services
             };
             return lista;
         }
+           
+
     }
 }

@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -59,8 +60,9 @@ export function Header() {
                 >
                   <Icone
                     nome="Stethoscope"
-                    color={pathname === "/vendas" ? "black" : "gray"}
+                    color={pathname === "/medico" ? "black" : "gray"}
                   />
+
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right">Vendas</TooltipContent>

@@ -9,8 +9,9 @@ namespace Backend.Services
         public static List<InternacoesStatus> InternacoesStatus(string status) 
         {
             var lista = new List<InternacoesStatus>();
-            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             SELECT 
                 i.status AS status,
@@ -25,7 +26,7 @@ namespace Backend.Services
 
             comando.Parameters.AddWithValue("status", status);
 
-            var reader = comando.ExecuteReader();
+            using var reader = comando.ExecuteReader();
 
             while (reader.Read()) 
             {
@@ -40,7 +41,8 @@ namespace Backend.Services
         public static List<InternacoesSemestral> InternacoesSemestral(int? ano, int? mes)
         {
             var lista = new List<InternacoesSemestral>();
-            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
+            using var comando = conexao.CreateCommand();
 
             var hoje = DateTime.Now;
             int anoBase = ano ?? hoje.Year;
@@ -77,8 +79,9 @@ namespace Backend.Services
         public static List <InternacoesDepartamento> InternacoesDepartamentos() 
         {
            var lista = new List<InternacoesDepartamento>();
-           var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             select 
                 d.nome as departamentos,
@@ -90,7 +93,7 @@ namespace Backend.Services
             order by internacoes desc;
             ";
 
-            var reader = comando.ExecuteReader();
+            using var reader = comando.ExecuteReader();
 
             while (reader.Read())
             {
@@ -105,8 +108,9 @@ namespace Backend.Services
         public static List<InternacoesResponsaveis> DepartamentosResposaveis()
         {
             var lista = new List<InternacoesResponsaveis>();
-            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             select 
                 d.nome as departamento,
@@ -117,7 +121,7 @@ namespace Backend.Services
             inner join responsavel r
 	            on r.id = d.responsavel_id
             ";
-            var reader = comando.ExecuteReader();
+            using var reader = comando.ExecuteReader();
 
             while (reader.Read()) 
             {

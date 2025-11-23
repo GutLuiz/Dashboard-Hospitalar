@@ -8,8 +8,9 @@ namespace Backend.Services
         public static List<CardsDto> CardsGeral()
         {
             var lista = new List<CardsDto>();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
-            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
                 SELECT 
                     (SELECT COUNT(*) FROM PACIENTES) AS pacientes,
@@ -18,7 +19,7 @@ namespace Backend.Services
                     (SELECT COUNT(*) FROM CONSULTAS) AS consultas;
             ";
 
-            using var reader = comando.ExecuteReader();
+            var reader = comando.ExecuteReader();
             while (reader.Read())
             {
                 lista.Add(new CardsDto
@@ -35,7 +36,8 @@ namespace Backend.Services
         public static List<ExamesDto> ExameSemestral(int? ano, int? mes)
         {
             var lista = new List<ExamesDto>();
-            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
+            using var comando = conexao.CreateCommand();
 
             var hoje = DateTime.Now;
             int anoBase = ano ?? hoje.Year;
@@ -45,6 +47,8 @@ namespace Backend.Services
             {
                 var dataInicio = new DateTime(anoBase, mesBase, 1).AddMonths(-i);
                 var dataFim = dataInicio.AddMonths(1);
+
+                
 
                 comando.CommandText = @"
                 SELECT 
@@ -71,8 +75,9 @@ namespace Backend.Services
         public static List<ExamesMedicosDto> MedicosExames()
         {
             var lista = new List<ExamesMedicosDto>();
-            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             SELECT 
                 m.nome as medico,
@@ -100,7 +105,7 @@ namespace Backend.Services
         public static List<ConsutasDto> ConsultasSemestral(int? ano, int? mes)
         {
             var lista = new List<ConsutasDto>();
-            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
             var hoje = DateTime.Now;
             int anoBase = ano ?? hoje.Year;
@@ -111,6 +116,7 @@ namespace Backend.Services
                 var dataInicio = new DateTime(anoBase, mesBase, 1).AddMonths(-i);
                 var dataFim = dataInicio.AddMonths(1);
 
+                using var comando = conexao.CreateCommand();
                 comando.CommandText = @"
                 SELECT 
                    COUNT(*) as consultas
@@ -135,8 +141,9 @@ namespace Backend.Services
         public static List<ConsultasMedicosDto> MedicosConsulta()
         {
             var lista = new List<ConsultasMedicosDto>();
-            using  var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             SELECT 
                 m.nome as medico,
@@ -164,8 +171,9 @@ namespace Backend.Services
         public static List<PacienteExameDto> PacientesExames() 
         {
             var lista = new List<PacienteExameDto>();
-            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             select
                 p.nome as paciente,
@@ -201,8 +209,9 @@ namespace Backend.Services
         public static List<PacienteConsultaDto> PacitentesConsultas() 
         {
             var lista = new List<PacienteConsultaDto>();
-            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
              select
                  p.nome as paciente,

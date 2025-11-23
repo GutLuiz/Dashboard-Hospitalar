@@ -1,10 +1,11 @@
-﻿using Backend.Conexao;
+﻿
+using Backend.Conexao;
 using Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
-ConexaoServico.Configurar(configuration);
+ConexaoPostgres.Configurar(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {

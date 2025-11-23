@@ -4,32 +4,20 @@ using System.Data;
 
 namespace Backend.Conexao
 {
-    public static class ConexaoServico
+    public static class ConexaoPostgres
     {
         private static string _connectionString;
-        private static NpgsqlConnection _conexaoPostgres;
 
         public static void Configurar(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                                ?? throw new InvalidOperationException("DefaultConnection não encontrada no appsettings.json");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public static NpgsqlConnection ConexaoPostgres
+        public static NpgsqlConnection ObterConexao()
         {
-            get
-            {
-                if (_conexaoPostgres == null)
-                {
-                    _conexaoPostgres = new NpgsqlConnection(_connectionString);
-                    _conexaoPostgres.Open();
-                }
-                else if (_conexaoPostgres.State != ConnectionState.Open)
-                {
-                    _conexaoPostgres.Open();
-                }
-                return _conexaoPostgres;
-            }
+            var conexao = new NpgsqlConnection(_connectionString);
+            conexao.Open();
+            return conexao;
         }
     }
 }

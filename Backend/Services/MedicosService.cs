@@ -8,8 +8,9 @@ namespace Backend.Services
         public static List<MedicosConsultasDto> MedicosConsultas()
         {
             var lista = new List<MedicosConsultasDto>();
-            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             SELECT 
                 m.nome as medico,
@@ -40,8 +41,9 @@ namespace Backend.Services
         public static  List<MedicoExameDto> MedicoExames()
         {
             var lista = new List<MedicoExameDto>();
-            var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             SELECT 
                 m.nome as medico,
@@ -74,8 +76,9 @@ namespace Backend.Services
         public static List<EspecialidadeConsultas> EspecialidadeConsultas() 
         {
             var lista = new List<EspecialidadeConsultas>();
-            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             select 
                 m.especialidade as especialidade,
@@ -104,8 +107,9 @@ namespace Backend.Services
         public static List<EspecialidadeExames> EspecialidadeExames()
         {
             var lista = new List<EspecialidadeExames>();
-            using var comando = ConexaoServico.ConexaoPostgres.CreateCommand();
+            using var conexao = ConexaoPostgres.ObterConexao();
 
+            using var comando = conexao.CreateCommand();
             comando.CommandText = @"
             select 
                  m.especialidade as especialidade,

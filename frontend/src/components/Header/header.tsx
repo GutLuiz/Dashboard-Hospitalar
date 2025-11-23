@@ -50,7 +50,7 @@ export function Header() {
                 >
                   <Icone
                     nome="House"
-                    color={active === "/home" ? "black" : "gray"}
+                    color={active === "/" ? "black" : "gray"}
                   />
                 </Link>
               </TooltipTrigger>

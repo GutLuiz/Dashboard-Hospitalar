@@ -52,9 +52,9 @@ export default function Home() {
       const dataCards = await BuscarCardsGeral();
     if(dataCards){
       setPacientesCadastrados(dataCards[0].pacientes || 0);
-      setMedicosCadastrados(dataCards[1].medicos || 0);
-      setExamesCadastrados(dataCards[2].exames || 0);
-      setConsultasCadastrados(dataCards[3].consultas || 0);
+      setMedicosCadastrados(dataCards[0].medicos || 0);
+      setExamesCadastrados(dataCards[0].exames || 0);
+      setConsultasCadastrados(dataCards[0].consultas || 0);
     }
     }catch(error){
       console.log("erro na busca de algum card Geral!")

@@ -347,7 +347,7 @@ export default function Home() {
                   <TableCell className="font-medium">{item.cpf}</TableCell>
                   <TableCell className="font-medium">{item.email}</TableCell>
                   <TableCell className="font-medium">{item.telefone}</TableCell>
-                  <TableCell className="font-medium">{item.exames}</TableCell>
+                  <TableCell className="font-medium ">{item.exames}</TableCell>
                 </>
               )}
             />

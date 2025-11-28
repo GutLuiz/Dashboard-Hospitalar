@@ -44,7 +44,7 @@ export function Header() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="/home"
+                  href="/"
                   className="flex h-10 w-10 shrink-0 items-center justify-center 
                   text-muted-foreground transition-colors hover:text-foreground"
                 >
@@ -60,34 +60,34 @@ export function Header() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="/medico"
+                  href="/medicos"
                   className="flex h-10 w-10 shrink-0 items-center justify-center 
                   text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <Icone
                     nome="Stethoscope"
-                    color={active === "/medico" ? "black" : "gray"}
+                    color={active === "/medicos" ? "black" : "gray"}
                   />
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Vendas</TooltipContent>
+              <TooltipContent side="right">Medicos</TooltipContent>
             </Tooltip>
 
             {/* Pedidos */}
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="/pedidos"
+                  href="/internacoes"
                   className="flex h-10 w-10 shrink-0 items-center justify-center 
                   text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <Icone
                     nome="Hospital"
-                    color={active === "/pedidos" ? "black" : "gray"}
+                    color={active === "/internacoes" ? "black" : "gray"}
                   />
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Pedidos</TooltipContent>
+              <TooltipContent side="right">Internações</TooltipContent>
             </Tooltip>
 
             {/* Botão Sair */}

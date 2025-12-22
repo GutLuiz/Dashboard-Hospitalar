@@ -17,7 +17,7 @@ export type MedicosConsultas = {
 
 export type MedicosExames = {
     medicos : string;
-    email : string;
+    email : string; 
     crm : string;
     exames : number;
 }

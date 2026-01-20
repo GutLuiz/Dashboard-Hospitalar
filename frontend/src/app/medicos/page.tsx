@@ -134,7 +134,7 @@ export default function Medicos(){
                 />
             </section>
             <section  className="flex flex-col justify-center items-center mb-5 lg:flex-row lg:flex-wrap">
-                <div className="w-[90%] mb-5 lg:w-[40%]">
+                <div className="w-[90%]  lg:w-[44%]  lg:mr-[1%]">
                 <Grafico 
                 titulografico="Especialidade Consulta"
                 textoInfo="As top consultas de acordo com a especialidade do medico"
@@ -178,7 +178,7 @@ export default function Medicos(){
                 </ResponsiveContainer>
                 </Grafico>
                 </div>
-                <div className="w-[90%] mb-5 lg:w-[40%]">
+                <div className="w-[90%]  lg:w-[45%]">
                 <Grafico 
                 titulografico="Especialidade Exames"
                 textoInfo="As top exames de acordo com a especialidade do medico"
@@ -224,7 +224,7 @@ export default function Medicos(){
                 </div>
             </section>
             <section className=" flex flex-col items-center justify-center lg:flex-row lg:justify-around">
-        <div className=" w-[95%] mb-5  lg:w-[40%] lg:mt-5">
+        <div className=" w-[95%] mb-5  lg:w-[40%]">
           
             <Lista
               textoInfo="Top 10 medicos por consultas"
@@ -242,7 +242,7 @@ export default function Medicos(){
             />
         
         </div>
-        <div className=" w-[95%] mb-5  lg:w-[40%] lg:mt-5">
+        <div className=" w-[95%] mb-5 lg:w-[40%] ">
          
             <Lista
               textoInfo="Top 10 Medicos por exames."

@@ -1,8 +1,10 @@
 import { api } from "./api";
 
-export const BuscarCardsInternacoes = async () => {
+export const BuscarCardsInternacoes = async (status: string = "*") => {
     try {
-        const response = await api.get('/cards-internacoes');
+        const response = await api.get('/cards-internacoes', {
+            params:{status:status}
+        });
         return response.data;
     } catch (error) {
         console.error(error);

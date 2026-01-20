@@ -334,7 +334,7 @@ export default function Home() {
         </div>
       </section>
       <section className=" flex flex-col items-center justify-center lg:flex-row lg:justify-around">
-        <div className=" w-[95%] mb-5  lg:w-[40%] lg:mt-5">
+        <div className=" w-[95%]  lg:w-[40%]">
           
             <Lista
               textoInfo="Top 10 produtos com maiores volumes de vendas."
@@ -353,8 +353,7 @@ export default function Home() {
             />
         
         </div>
-        <div className=" w-[95%] mb-5  lg:w-[40%] lg:mt-5">
-         
+        <div className=" w-[95%]  lg:w-[40%]">
             <Lista
               textoInfo="Top 10 fabricantes com maiores volumes de vendas."
               titulo="Fabricantes Em Destaque"

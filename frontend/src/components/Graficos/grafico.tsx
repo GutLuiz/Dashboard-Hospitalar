@@ -35,7 +35,7 @@ const Grafico: React.FC<GraficoContainerProps> = ({
     <CardHeader>
       <div className="flex items-center justify-between">
         <CardTitle>{titulografico}</CardTitle>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center ">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <div className="flex items-center justify-center bg-muted rounded-md w-8 h-8 hover:bg-muted/50 transition-colors cursor-pointer">

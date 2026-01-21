@@ -106,6 +106,7 @@ namespace Backend.Services
         {
             var lista = new List<ConsutasDto>();
             using var conexao = ConexaoPostgres.ObterConexao();
+            using var comando = conexao.CreateCommand();
 
             var hoje = DateTime.Now;
             int anoBase = ano ?? hoje.Year;
@@ -116,7 +117,7 @@ namespace Backend.Services
                 var dataInicio = new DateTime(anoBase, mesBase, 1).AddMonths(-i);
                 var dataFim = dataInicio.AddMonths(1);
 
-                using var comando = conexao.CreateCommand();
+                
                 comando.CommandText = @"
                 SELECT 
                    COUNT(*) as consultas

@@ -90,7 +90,8 @@ namespace Backend.Services
             inner join departamentos d
 	            on i.departamento_id = d.departamento_id
             group by d.nome
-            order by internacoes desc;
+            order by internacoes desc
+            limit 5;
             ";
 
             using var reader = comando.ExecuteReader();
@@ -127,7 +128,7 @@ namespace Backend.Services
             {
                 lista.Add(new InternacoesResponsaveis 
                 {
-                    deparmento = reader["departamento"] == DBNull.Value ? string.Empty : reader["departamento"].ToString().Trim(),
+                    departamento = reader["departamento"] == DBNull.Value ? string.Empty : reader["departamento"].ToString().Trim(),
                     responsaveis = reader["responsavel"] == DBNull.Value ? string.Empty : reader["responsavel"].ToString().Trim(),
                     cpf = reader["cpf"] == DBNull.Value ? string.Empty : reader["cpf"].ToString().Trim(),
                     email = reader["email"] == DBNull.Value ? string.Empty : reader["email"].ToString().Trim(),

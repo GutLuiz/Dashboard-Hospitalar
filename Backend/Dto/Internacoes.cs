@@ -19,7 +19,7 @@
     }
     public class InternacoesResponsaveis 
     {
-        public string deparmento { get; set; } = "";
+        public string departamento { get; set; } = "";
 
         public string responsaveis { get; set; } = "";
 

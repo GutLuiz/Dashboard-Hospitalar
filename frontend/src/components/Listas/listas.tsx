@@ -71,9 +71,9 @@ export default function Lista<T>({
             </div>
             <Table>
                 <TableHeader className="bg-muted/50">
-                    <TableRow>
+                    <TableRow className="[&>th:last-child]:text-right">
                         {colunas.map((col, idx) => (
-                            <TableHead key={idx} className={idx === colunas.length - 1 ? "text-right" : ""}>
+                            <TableHead key={idx}>
                                 {col}
                             </TableHead>
                         ))}
@@ -81,7 +81,7 @@ export default function Lista<T>({
                 </TableHeader>
                 <TableBody>
                     {dados.map((item, index) => (
-                        <TableRow key={index}>
+                        <TableRow key={index} className="[&>td:last-child]:text-right">
                             {renderItem(item, index)}
                         </TableRow>
                     ))}

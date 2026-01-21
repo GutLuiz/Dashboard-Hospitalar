@@ -12,9 +12,11 @@ export const BuscarCardsInternacoes = async (status: string = "*") => {
     }
 }
 
-export const BuscarGraficosInternacoes = async () => {
+export const BuscarGraficosInternacoes = async (ano: number = 2025, mes: number = 4) => {
     try {
-        const response = await api.get('/graficos-internacoes');
+        const response = await api.get('/graficos-internacoes',{
+            params:{ano:ano, mes:mes}
+        });
         return response.data;
     } catch (error) {
         console.error(error);

@@ -10,9 +10,9 @@ export const BuscarCardsGeral = async () => {
     }
 }
 
-export const BuscarGraficosGeral = async () => {
+export const BuscarGraficosGeral = async (ano: number = 2025, mes : number = 11) => {
     try {
-        const response = await api.get('/graficos-geral');
+        const response = await api.get('/graficos-geral',{params:{ano:ano, mes:mes}});
         return response.data;
     } catch (error) {
         console.error(error);

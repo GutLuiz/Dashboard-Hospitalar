@@ -91,13 +91,7 @@ async function InternacoesListas(){
     const dataListasInternacoes = await BuscarListasInternacoes()
 
     if(dataListasInternacoes){
-        const normalizado = Array.isArray(dataListasInternacoes)
-            ? dataListasInternacoes.map((item) => ({
-                ...item,
-                departamento: item.departamento ?? item.deparmento ?? ""
-            }))
-            : [];
-        setDepartamentosLista(normalizado);
+        setDepartamentosLista(dataListasInternacoes || []);
     }
 }
 

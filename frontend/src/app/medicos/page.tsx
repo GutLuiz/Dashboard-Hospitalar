@@ -59,8 +59,10 @@ export default function Medicos(){
         const dataCards = await BuscarListasMedicos();
 
         if(dataCards){
-            setMedConsultaLider(dataCards.medicosConsultas[0].medicos || "");
-            setMedExameLider(dataCards.medicosExames[0].medicos || "");
+            setMedConsultaLider(dataCards.medicosConsultas?.[0]?.medicos || "");
+            setMedExameLider(dataCards.medicosExames?.[0]?.medicos || "");
+            setMedConsulta(dataCards.medicosConsultas || []);
+            setMedExame(dataCards.medicosExames || []);
         }
     }
 
@@ -83,10 +85,9 @@ export default function Medicos(){
     }
 
     useEffect(() => {
-        MedicosCards(),
-        MedicosGraficos(),
-        MedicosListas()
-    });
+        MedicosCards();
+        MedicosGraficos();
+    }, []);
     
     //Configs
     const especialidadeConsultaConfig = {
